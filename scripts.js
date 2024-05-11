@@ -1,9 +1,4 @@
-// rock paper scissors against the computer
-// get the computer choice
-// get the player choice
-// compare the two choice and determine a winner
-
-// declare variable for score keeping
+// declare variables for score keeping
 
 let humanScore = 0
 let computerScore = 0
@@ -17,7 +12,7 @@ function getComputerChoice(){
     } else if (random <= 0.666) {
         return "paper";
     } else {
-        return "scissor";
+        return "scissors";
     }
 }
 
@@ -26,11 +21,12 @@ function getComputerChoice(){
 function getHumanChoice(){
     let humanChoice = prompt("Please make your choice").toLowerCase(); // get player choice from prompt and convert it to lower case
     console.log(humanChoice);
-    return humanChoice;
     if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") { // check that the player choice is valid
         console.log("Invalid choice. Only rock, paper or scissors are allowed.");
         return getHumanChoice();
     }
+    return humanChoice;
+
 }
 
 // logic to play a round
@@ -77,7 +73,27 @@ function playRound (humanChoice, computerChoice){
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+// play the game 5 times
 
-playRound(humanSelection, computerSelection);
+let roundCounter = 0;
+
+function playGame (){
+    if (roundCounter <= 4){
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);
+        roundCounter += 1;
+        console.log("Your score is: ", humanScore);
+        console.log("The computer score is: ", computerScore);
+        console.log((5 - roundCounter), " rounds left.");
+        playGame();
+    }  
+    else if (computerScore > humanScore){
+        console.log("You lose, the computer scored ", computerScore, " and you only scored ", humanScore);
+    }
+    else {
+        console.log("You win, you scored ", humanScore, " and the computer only scored ", computerScore);
+    }
+}
+
+playGame()
