@@ -18,16 +18,31 @@ function getComputerChoice(){
 
 // get player choice
 
-function getHumanChoice(){
-    let humanChoice = prompt("Please make your choice").toLowerCase(); // get player choice from prompt and convert it to lower case
-    console.log(humanChoice);
-    if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") { // check that the player choice is valid
-        console.log("Invalid choice. Only rock, paper or scissors are allowed.");
-        return getHumanChoice();
-    }
-    return humanChoice;
+// function getHumanChoice(){
+//     let humanChoice = prompt("Please make your choice").toLowerCase(); // get player choice from prompt and convert it to lower case
+//     console.log(humanChoice);
+//     if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") { // check that the player choice is valid
+//         console.log("Invalid choice. Only rock, paper or scissors are allowed.");
+//         return getHumanChoice();
+//     }
+//     return humanChoice;
+// }
 
-}
+const rockBtn = document.querySelector("#rockBtn");
+const paperBtn = document.querySelector("#paperBtn");
+const scissorsBtn = document.querySelector("#scissorsBtn");
+const playerOptions = [rockBtn, paperBtn, scissorsBtn];
+playerOptions.forEach(option => {
+    option.addEventListener('click', function(e) {
+        if (e.target === rockBtn){
+            playRound("rock", getComputerChoice());
+        } else if (e.target === paperBtn) {
+            playRound("paper", getComputerChoice());
+        } else {
+            playRound("scissors", getComputerChoice());
+        }
+    })
+})
 
 // logic to play a round
 
@@ -72,28 +87,3 @@ function playRound (humanChoice, computerChoice){
         }
     }
 }
-
-// play the game 5 times
-
-let roundCounter = 0;
-
-function playGame (){
-    if (roundCounter <= 4){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
-        roundCounter += 1;
-        console.log("Your score is: ", humanScore);
-        console.log("The computer score is: ", computerScore);
-        console.log((5 - roundCounter), " rounds left.");
-        playGame();
-    }  
-    else if (computerScore > humanScore){
-        console.log("You lose, the computer scored ", computerScore, " and you only scored ", humanScore);
-    }
-    else {
-        console.log("You win, you scored ", humanScore, " and the computer only scored ", computerScore);
-    }
-}
-
-playGame()
